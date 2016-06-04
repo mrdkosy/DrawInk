@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C24F7CF20B0F83CEA889F533B9AB1F4DE647B8A6",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "ACF6AB7B0972314145585E1F9A50467A7420ACD4" : 0,
+    "C24F7CF20B0F83CEA889F533B9AB1F4DE647B8A6" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "5F7962EB-E3E5-4BCA-86BA-88A30FADAC2B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "ACF6AB7B0972314145585E1F9A50467A7420ACD4" : "..\/..\/..",
+    "C24F7CF20B0F83CEA889F533B9AB1F4DE647B8A6" : "DrawInk\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "DrawInk",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "DrawInk.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "ssh:\/\/bitbucket.org\/kaiware007\/namacream.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ACF6AB7B0972314145585E1F9A50467A7420ACD4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/mrdkosy\/DrawInk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C24F7CF20B0F83CEA889F533B9AB1F4DE647B8A6"
+    }
+  ]
+}

@@ -7,8 +7,8 @@
 class LoadAnimalData{
 public:
     enum ANIMAL{
-        BIRD=0,
-        TENTOMUSHI
+        TENTOMUSHI=0,
+        BIRD=1
     };
     enum TYPE{
         NORMAL=0,
@@ -16,19 +16,37 @@ public:
     };
     LoadAnimalData(){
         //normal
-        image[BIRD].load("animal/normal/bird.png");
-        image[TENTOMUSHI].load("animal/normal/tento.png");
+        ofImage img;
+        vector<ofImage> _img;
+        //------tentomushi------
+        img.load("animal/normal/tentomushi1.png");
+        _img.push_back(img);
+        img.load("animal/normal/tentomushi2.png");
+        _img.push_back(img);
+        image.push_back(_img);
+        //------bird------
+        _img.clear();
+        img.load("animal/normal/bird3.png");
+        _img.push_back(img);
+        image.push_back(_img);
         //rare
         
     }
-    ofImage & getImage(int _animal){
-        return image[_animal];
+    vector<ofImage>* getImage(ANIMAL _animal){
+        return &image[_animal];
+    }
+    int getImageNum(ANIMAL _animal){
+        return image[_animal].size();
     }
     ofVec2f getAnimalNum(){
         return ofVec2f(2, 0); //normal and rare animal image num
     }
+    ANIMAL getAnimal(int i){
+        if(i==0) return TENTOMUSHI;
+        else if(i==1) return BIRD;
+    }
 private:
-    ofImage image[2];
+    vector<vector<ofImage>> image;
 };
 
 #endif /* LoadAnimalData_hpp */

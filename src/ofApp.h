@@ -6,6 +6,7 @@
 #include "Ink.hpp" //ink
 #include "GetAttackPoint.hpp" //arduino
 #include "AnimalHandler.hpp" //animal
+#include "Judge.hpp" //attack judges
 
 class ofApp : public ofBaseApp{
 
@@ -29,9 +30,14 @@ class ofApp : public ofBaseApp{
     LoadData data;
     Ink ink;
     GetAttackPoint getAttackPoint;
-    AnimalHandler animal;
+    static const int AnimalNum = 1;
+    AnimalHandler animal[AnimalNum];
     void pushInk(ofPoint p, float size);
+    Judge judge;
     ofFbo fbo;
+    ofShader shader;
+    ofVec2f vertex;
+    ofSoundPlayer pushSound[3], attackSound;
     
     enum COLOR{
         CYAN = 0,

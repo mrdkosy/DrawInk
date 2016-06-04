@@ -45,6 +45,9 @@
 		8B0057881CFF45E400A1B1EB /* LoadAnimalData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LoadAnimalData.hpp; sourceTree = "<group>"; };
 		8B00578E1CFF462800A1B1EB /* AnimalMotionController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AnimalMotionController.hpp; sourceTree = "<group>"; };
 		8B0057911CFF476500A1B1EB /* AnimalHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AnimalHandler.hpp; sourceTree = "<group>"; };
+		8B2969411D01487F00B851EE /* Judge.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Judge.hpp; sourceTree = "<group>"; };
+		8B2969441D016BC000B851EE /* AttackEffect.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AttackEffect.hpp; sourceTree = "<group>"; };
+		8BE72B2B1D024C660033C393 /* shader.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = shader.frag; path = bin/data/shader.frag; sourceTree = SOURCE_ROOT; };
 		8BECC7E81CFA875E007F7887 /* Ink.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Ink.hpp; sourceTree = "<group>"; };
 		8BECC7EB1CFA8B29007F7887 /* LoadData.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LoadData.hpp; sourceTree = "<group>"; };
 		8BECC7EE1CFAB2F5007F7887 /* Splash.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Splash.hpp; sourceTree = "<group>"; };
@@ -53,7 +56,7 @@
 		E4B69B5B0A3A1756003C02F2 /* DrawInkDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DrawInkDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
-		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
+		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
 		E4B6FCAD0C3E899E008CF71C /* openFrameworks-Info.plist */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text.plist.xml; path = "openFrameworks-Info.plist"; sourceTree = "<group>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
@@ -93,9 +96,18 @@
 			children = (
 				8B0057881CFF45E400A1B1EB /* LoadAnimalData.hpp */,
 				8B00578E1CFF462800A1B1EB /* AnimalMotionController.hpp */,
+				8B2969441D016BC000B851EE /* AttackEffect.hpp */,
 				8B0057911CFF476500A1B1EB /* AnimalHandler.hpp */,
 			);
 			name = Animal;
+			sourceTree = "<group>";
+		};
+		8B29693F1D01485100B851EE /* Judge */ = {
+			isa = PBXGroup;
+			children = (
+				8B2969411D01487F00B851EE /* Judge.hpp */,
+			);
+			name = Judge;
 			sourceTree = "<group>";
 		};
 		BB4B014C10F69532006C3DED /* addons */ = {
@@ -133,8 +145,10 @@
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				8BF126AB1CFDBA440087EEAD /* GetAttackPoint.hpp */,
+				8B29693F1D01485100B851EE /* Judge */,
 				8B0057851CFF458900A1B1EB /* Ink */,
 				8B0057861CFF45C600A1B1EB /* Animal */,
+				8BE72B2B1D024C660033C393 /* shader.frag */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;

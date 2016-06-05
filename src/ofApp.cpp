@@ -10,39 +10,54 @@ void ofApp::setup(){
     ofClear(255);
     fbo.end();
     
+    camCol.setup(CAMERA_WIDTH, CAMERA_HEIGHT);
+    
     data.loadData();
     ink.dataSet(data.getInkData(),data.getSplashData());
     
+    for(int i=0; i<AnimalNum; i++){
+        animal[i].setup(&fbo.getTexture(), LoadAnimalData::TYPE::SUPERARE);
+    }
+    
     shader.load("","shader.frag");
     vertex = ofVec2f(ofGetWidth(), ofGetHeight());
+    animalCount = 0;
+    
+    isClear = false;
+    preClear = isClear;
+    rotate = 0;
     
     //sound
     pushSound[0].load("sound/Motion-Pop02-1.mp3");
     pushSound[1].load("sound/Motion-Pop19-1.mp3");
-    pushSound[2].load("sound/Motion-Pop23-1.mp3");
-    attackSound.load("sound/ata_a26.mp3");
+    rainSound.load("sound/rain.mp3");
+    animalSound[0].load("sound/bird10.mp3");
+    animalSound[1].load("sound/nyu1.mp3");
+    volume = 1.;
     
 }
 //--------------------------------------------------------------
 void ofApp::update(){
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
+    camCol.update();
+    
     if( getAttackPoint.isAttack() ){
         pushInk(getAttackPoint.getPosition(),
                 getAttackPoint.getPower());
     }
     
-    
 }
 //--------------------------------------------------------------
 void ofApp::draw(){
     
+    
     fbo.begin();
     ofEnableBlendMode(OF_BLENDMODE_SUBTRACT);
     if( !ink.isDrawEnd() ) ink.draw();
-    ofDisableBlendMode();
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
     fbo.end();
-    fbo.draw(0, 0);
+    
     
     shader.begin();
     
@@ -66,10 +81,48 @@ void ofApp::draw(){
     
     shader.end();
     
+    
     ofSetColor(255);
     for(int i=0; i<AnimalNum; i++){
         animal[i].draw();
     }
+    
+    
+    if(ofGetFrameNum()!=0 && ofGetFrameNum()%3600 == 0){ //1分に一回画面をclearに
+        isClear = true;
+        rain.setup();
+        rainSound.stop();
+        rainSound.play();
+    }
+    
+    if(rainSound.isPlaying()) volume *= .95;
+    if(isClear){
+        rain.draw();
+        if( rain.getEnd() ){
+            Clear();
+            isClear = false;
+        }
+        volume = 1.;
+    }
+    if(rainSound.isPlaying()) rainSound.setVolume(volume);
+    
+    
+    //update
+    for(int i=0; i<AnimalNum; i++){
+        if(!animal[i].getIsDraw()){
+            if(animalCount%10 == 8){
+                animal[i].setup(&fbo.getTexture(), LoadAnimalData::TYPE::RARE);
+            }else{
+                animal[i].setup(&fbo.getTexture(), LoadAnimalData::TYPE::NORMAL);
+            }
+            animalCount++;
+        }
+    }
+    
+    // 主にデバッグ表示用
+    ofEnableBlendMode(OF_BLENDMODE_ALPHA);
+    camCol.draw();
+    
 }
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -79,51 +132,86 @@ void ofApp::keyPressed(int key){
                 ofRandom(30, 150));
     }
     if(key == 'c'){ //clear
-        fbo.begin();
-        ofBackground(255, 255, 255);
-        fbo.end();
-        ofBackground(255);
+        Clear();
     }
     if(key == 'a'){
         for(int i=0; i<AnimalNum; i++){
-            animal[i].setup(&fbo.getTexture());
+            animal[i].setup(&fbo.getTexture(), LoadAnimalData::TYPE::NORMAL);
+            
         }
     }
     
+    if(key == '1')isClear = true;
+    
+    
+    if(key == 'd'){	// Debug Mode
+        camCol.changeDebugMode();
+    }
 }
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
+    
+    // 色取得テスト
+    ofColor color;
+    if(camCol.tryGetColor(x - 320, y, color)) {
+        
+    }
+    
+    // スクリーン補正四隅座標調整開始
+    camCol.startScreenAdjust(x, y);
+    
     pushInk(ofPoint(x,y,0),
-            ofRandom(30, 150));
+            ofRandom(50, 120));
 }
+//--------------------------------------------------------------
+void ofApp::mouseDragged(int x, int y, int button){
+    // スクリーン補正四隅座標移動
+    camCol.setScreenAdjust(x, y);
+}
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button){
+    // スクリーン補正四隅座標調整終了
+    camCol.endScreenAdjust(x, y);
+}
+
 //--------------------------------------------------------------
 void ofApp::pushInk(ofPoint p, float size){ //draw ink
     
-    int s = ofRandom(3);
-    pushSound[s].play();
-    
-    int n = ofRandom(3); //cyan, magenta , yellow
-    ofColor c = color_list[n];
-    size /= 100;
-    ink.setup(p, //position
-              c, //color
-              size);//size
-    
-    for(int i=0; i<AnimalNum; i++){
-        bool j = judge.InkAttackJudge(p, size,
-                                      animal[i].getPosition());
-        if(j == true){
-            animal[i].setDrawFalse();
-            attackSound.play();
+    if(!isClear){
+        int s = ofRandom(2);
+        pushSound[s].play();
+        
+        int n = ofRandom(3); //cyan, magenta , yellow
+        ofColor c = color_list.color[n];
+        size /= 100;
+        ink.setup(p, //position
+                  c, //color
+                  size);//size
+        
+        for(int i=0; i<AnimalNum; i++){
+            bool j = judge.InkAttackJudge(p, size,
+                                          animal[i].getPosition());
+            if(j == true){
+                s = ofRandom(2);
+                animalSound[s].play();
+                animal[i].setDrawFalse();
+            }
         }
     }
-    
+}
+//--------------------------------------------------------------
+void ofApp::Clear() {
+    fbo.begin();
+    ofBackground(255, 255, 255);
+    fbo.end();
+    ofBackground(255);
+    for(int i=0; i<AnimalNum; i++){
+        animal[i].setup(&fbo.getTexture(), LoadAnimalData::TYPE::SUPERARE);
+    }
 }
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){}
 void ofApp::mouseMoved(int x, int y ){}
-void ofApp::mouseDragged(int x, int y, int button){}
-void ofApp::mouseReleased(int x, int y, int button){}
 void ofApp::mouseEntered(int x, int y){}
 void ofApp::mouseExited(int x, int y){}
 void ofApp::windowResized(int w, int h){}

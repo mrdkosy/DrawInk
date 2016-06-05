@@ -6,37 +6,70 @@
 #include "AnimalMotionController.hpp"
 #include "AttackEffect.hpp"
 
+
 class AnimalHandler{
 public:
-    void setup(ofTexture* texture){
+    
+    void setup(ofTexture* texture, LoadAnimalData::TYPE type){
+        //get color
         ofPixels pixels;
         texture->readToPixels(pixels);
         int count = 0;
-        while( 1 ){
-            ofPoint p = ofPoint(ofRandomWidth(), ofRandomHeight());
-            ofColor c = pixels.getColor(p.x, p.y);
-            if( c != ofGetBackgroundColor() ){
+        randomColor = false;
+        isDraw = true;
+        
+        ofPoint p = ofPoint(ofRandom(100, ofGetWidth()-100), ofRandom(100, ofGetHeight()-100));
+        ofColor c = pixels.getColor(p.x, p.y);
+        
+        if(type == LoadAnimalData::SUPERARE){ //super rare
+            animal.setup(type, p, ofColor());
+            
+        }else if(type == LoadAnimalData::NORMAL){ //normal
+            while( 1 ){
                 color = c;
-                isDraw = true;
-                
-                //-------------must change--------------
-                animal.setup(LoadAnimalData::TYPE::NORMAL, p);
-                
-                break;
-            }else if(count > 30){
-                isDraw = false;
-                break;
+                if(c == color_list.color[3] ||
+                   c == color_list.color[4] ||
+                   c == color_list.color[5]){
+                    color = c;
+                    animal.setup(type, p, c);
+                    break;
+                }else if(count > 30){
+                    isDraw = false;
+                    break;
+                }
+                count++;
             }
-            count++;
-            preDraw = isDraw;
+        }else{
+            while( 1 ){ //rare
+                color = c;
+                if(c == color_list.color[0] ||
+                   c == color_list.color[1] ||
+                   c == color_list.color[2]){
+                    randomColor = true;
+                    animal.setup(type, p, c);
+                    break;
+                }else if(count > 30){
+                    isDraw = false;
+                    break;
+                }
+                count++;
+            }
         }
+        preDraw = isDraw;
     }
     void draw(){
         update();
         
         ofPushStyle();
+        if(randomColor){
+            ofSetColor(ofColor::fromHsb(ofRandom(255),
+                                        120, 255));
+        }else{
+            //ofSetColor(color, 255);
+            ofSetColor(255, 255);
+        }
         
-        ofSetColor(color, 255);
+        
         if(isDraw) animal.draw();
         
         for(int i=0; i<effect.size(); i++){
@@ -50,6 +83,9 @@ public:
     }
     void setDrawFalse(){
         isDraw = false;
+    }
+    bool getIsDraw(){
+        return isDraw;
     }
 private:
     void update(){
@@ -75,7 +111,8 @@ private:
     AnimalMotionController animal;
     vector<AttackEffect> effect;
     ofColor color;
-    bool isDraw, preDraw;
+    bool isDraw, preDraw, randomColor;
+    COLOR_LIST color_list;
 };
 
 #endif /* AnimalHandler_hpp */

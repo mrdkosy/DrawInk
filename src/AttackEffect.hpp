@@ -18,8 +18,6 @@ public:
                                                ofRandom(-18, 0),0));
                 resolution.push_back(ofRandom(3, 6));
                 radius.push_back(ofRandom(1, 12));
-                //                color.push_back(ofColor::fromHsb(ofRandom(255),
-                //                                                 ofRandom(80, 200), 255));
             }
             friction = 0.01;
             
@@ -31,10 +29,6 @@ public:
             resolution.push_back(ofRandom(3, 6));
             radius.push_back(12);
             position.push_back(p);
-            //            for(int i=0; i<NUM; i++){
-            //                int c = ofRandom(255);
-            //                color.push_back(ofColor::fromHsb(c, 255, 255));
-            //            }
         }
         
     }

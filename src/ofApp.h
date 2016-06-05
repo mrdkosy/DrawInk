@@ -7,6 +7,9 @@
 #include "GetAttackPoint.hpp" //arduino
 #include "AnimalHandler.hpp" //animal
 #include "Judge.hpp" //attack judges
+#include "Rain.hpp"
+
+#include "CameraColor.hpp"
 
 class ofApp : public ofBaseApp{
 
@@ -30,32 +33,25 @@ class ofApp : public ofBaseApp{
     LoadData data;
     Ink ink;
     GetAttackPoint getAttackPoint;
-    static const int AnimalNum = 1;
+    static const int AnimalNum = 3;
     AnimalHandler animal[AnimalNum];
     void pushInk(ofPoint p, float size);
+    void Clear();
     Judge judge;
     ofFbo fbo;
     ofShader shader;
     ofVec2f vertex;
-    ofSoundPlayer pushSound[3], attackSound;
+    ofSoundPlayer pushSound[2], rainSound, animalSound[2];
+    COLOR_LIST color_list;
+    int animalCount, rotate;
+    bool isClear, preClear;
+    float volume;
+    Rain rain;
     
-    enum COLOR{
-        CYAN = 0,
-        MAGENTA,
-        YELLOW,
-        RED,
-        GREEN,
-        BLUE,
-        BLACK
-    };
-    const ofColor color_list[7] = {
-        ofColor(255, 0, 0), //cyan
-        ofColor(0, 255, 0), //magenta
-        ofColor(0, 0, 255), //yellow
-        ofColor(255, 255, 0), //blue
-        ofColor(0, 255, 255), //red
-        ofColor(255, 0, 255), //green
-        ofColor(255, 255, 255) //black
-    };
-    
+	CameraColor camCol;
+	
+	// cameraの解像度
+#define CAMERA_WIDTH	(320)
+#define CAMERA_HEIGHT	(240)
+
 };

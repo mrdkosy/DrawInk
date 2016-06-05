@@ -7,46 +7,146 @@
 class LoadAnimalData{
 public:
     enum ANIMAL{
-        TENTOMUSHI=0,
-        BIRD=1
+        BIRD=0,
+        TENTOMUSHI,
+        BUTTERFLY,
+
+        DRAGON,
+        HUMAN,
+        
+        EGG
     };
     enum TYPE{
         NORMAL=0,
-        RARE
+        RARE,
+        SUPERARE
     };
     LoadAnimalData(){
+        
         //normal
         ofImage img;
         vector<ofImage> _img;
-        //------tentomushi------
-        img.load("animal/normal/tentomushi1.png");
-        _img.push_back(img);
-        img.load("animal/normal/tentomushi2.png");
-        _img.push_back(img);
-        image.push_back(_img);
+        
         //------bird------
         _img.clear();
+        img.load("animal/normal/bird.png");
+        _img.push_back(img);
+        img.load("animal/normal/bird2.png");
+        _img.push_back(img);
+        img.load("animal/normal/bird.png");
+        _img.push_back(img);
         img.load("animal/normal/bird3.png");
         _img.push_back(img);
         image.push_back(_img);
-        //rare
         
+        //------tentomushi------
+        _img.clear();
+        //        img.load("animal/normal/tento.png");
+        //        _img.push_back(img);
+        //        img.load("animal/normal/tento2.png");
+        //        _img.push_back(img);
+        img.load("animal/normal/tento3.png");
+        _img.push_back(img);
+        image.push_back(_img);
+        
+        
+        //------butterfly------
+        _img.clear();
+        img.load("animal/normal/butterfly2.png");
+        _img.push_back(img);
+        img.load("animal/normal/butterfly.png");
+        _img.push_back(img);
+        img.load("animal/normal/butterfly3.png");
+        _img.push_back(img);
+        img.load("animal/normal/butterfly.png");
+        _img.push_back(img);
+        image.push_back(_img);
+        
+        
+        //rare
+        _img.clear();
+        img.load("animal/rare/doragon2.png");
+        _img.push_back(img);
+        img.load("animal/rare/doragon2.png");
+        _img.push_back(img);
+        img.load("animal/rare/doragon3.png");
+        _img.push_back(img);
+        img.load("animal/rare/doragon3.png");
+        _img.push_back(img);
+        image.push_back(_img);
+        
+        //------human------
+        _img.clear();
+        img.load("animal/rare/human.png");
+        _img.push_back(img);
+        img.load("animal/rare/human2.png");
+        _img.push_back(img);
+        img.load("animal/rare/human3.png");
+        _img.push_back(img);
+        img.load("animal/rare/human2.png");
+        _img.push_back(img);
+        image.push_back(_img);
+        
+        
+        //super rare
+        _img.clear();
+        img.load("animal/rare/egg.png");
+        _img.push_back(img);
+        img.load("animal/rare/egg.png");
+        _img.push_back(img);
+        img.load("animal/rare/egg2.png");
+        _img.push_back(img);
+        img.load("animal/rare/egg2.png");
+        _img.push_back(img);
+        img.load("animal/rare/egg.png");
+        _img.push_back(img);
+        img.load("animal/rare/egg.png");
+        _img.push_back(img);
+        img.load("animal/rare/egg3.png");
+        _img.push_back(img);
+        img.load("animal/rare/egg3.png");
+        _img.push_back(img);
+
+        image.push_back(_img);
+        
+        
+        //sound
+        rareSound.load("sound/sound04.mp3");
     }
-    vector<ofImage>* getImage(ANIMAL _animal){
-        return &image[_animal];
+    vector<ofImage>* getImage(){
+        return &image[_ANIMAL];
     }
-    int getImageNum(ANIMAL _animal){
-        return image[_animal].size();
+    int getImageNum(){
+        return image[_ANIMAL].size();
     }
-    ofVec2f getAnimalNum(){
-        return ofVec2f(2, 0); //normal and rare animal image num
+    ofVec3f getAnimalNum(){
+        return v; //normal and rare animal image num
     }
-    ANIMAL getAnimal(int i){
-        if(i==0) return TENTOMUSHI;
-        else if(i==1) return BIRD;
+    ANIMAL getAnimal(int type, int i){
+        if(type == 0){
+            if(i==0) return BIRD;
+            else if(i==1) return TENTOMUSHI;
+            else if(i==2) return BUTTERFLY;
+        }else if(type == 1){
+            rareSound.play();
+            if(i==0) return DRAGON;
+            else if(i==1) return HUMAN;
+        }else if(type == 2){
+            if(i == 0) return EGG;
+        }
+    }
+    void setAnimal(ANIMAL a){
+        _ANIMAL = a;
+    }
+    void setType(TYPE t){
+        _TYPE = t;
     }
 private:
-    vector<vector<ofImage>> image;
+    vector< vector<ofImage >> image;
+    ANIMAL _ANIMAL;
+    TYPE _TYPE;
+    ofVec3f v = ofVec3f(3, 2, 1);
+    ofSoundPlayer rareSound;
 };
 
 #endif /* LoadAnimalData_hpp */
